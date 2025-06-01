@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import Dashboard from './components/Dashboard';
 import BookList from './components/BookList';
@@ -10,6 +10,17 @@ import './App.css';
 function App() {
   const [books, setBooks] = useState([]);
   const [message, setMessage] = useState('');
+
+  // Load books from localStorage (simulate backend fetch)
+  useEffect(() => {
+    const stored = localStorage.getItem('books');
+    if (stored) setBooks(JSON.parse(stored));
+  }, []);
+
+  // Save books to localStorage (simulate backend save)
+  useEffect(() => {
+    localStorage.setItem('books', JSON.stringify(books));
+  }, [books]);
 
   // Add book handler
   const addBook = (book) => {
